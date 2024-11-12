@@ -1,0 +1,3 @@
+echo "staged lint check - start"
+npx lint-staged --debug
+echo "staged lint check - done"

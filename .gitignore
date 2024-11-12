@@ -1,10 +1,9 @@
 .DS_Store
 node_modules
 /dist
-uploads
+
 
 # local env files
-.env
 .env.local
 .env.*.local
 
@@ -22,5 +21,3 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
-
-.helm/charts/*.tgz
