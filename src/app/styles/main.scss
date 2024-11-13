@@ -4,3 +4,14 @@
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
 }
+
+.container {
+  max-width: 1792px;
+  padding: 0 24px;
+  margin: 0 auto;
+  box-sizing: content-box;
+
+  @media (min-width: 1024px) {
+    padding: 0 12px;
+  }
+}
