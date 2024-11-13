@@ -1,5 +1,8 @@
 <template lang="pug">
-div Hello world!
+div
+  AppHeader
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { AppHeader } from "@/widgets/AppHeader";
+</script>
