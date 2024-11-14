@@ -34,11 +34,13 @@ div(class="app")
             div(class="app__total-items") 412 товаров
             BaseBottomSheet
               template(#trigger="{ open }")
-                button(class="app__filters-bottom-sheet" @click="open") Фильтры
+                button(class="app__filters-bottom-sheet" @click="open")
               template(#default)
                 div(class="app__bottom-sheet-filters app__filters _mobile")
                   BaseToggle(v-for="label in ['Новинки', 'Есть в наличии', 'Контрактные', 'Эксклюзивные', 'Распродажа']" :key="label" :label="label" :model-value="false")
-            button(class="app__sort") Сначала дорогие
+            BaseDropdown(v-model="sortBy" :options="[{ label: 'Сначала дорогие', value: 'expensive' }, { label: 'Сначала недорогие', value: 'cheap' }, { label: 'Сначала популярные', value: 'popular' }, { label: 'Сначала новые', value: 'new' }]")
+              template(#trigger="{ toggle, selectedOption }")
+                button(class="app__sort", @click="toggle") {{ selectedOption.label }} <span> ▼ </span>
           div(class="app__items")
             div(class="app__item")
               GoodCard
@@ -52,6 +54,8 @@ div(class="app")
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
+
 import { AppHeader } from "@/widgets/AppHeader";
 import { GoodCard } from "@/entities/good";
 
@@ -63,12 +67,15 @@ import {
   BaseCarousel,
   BaseCarouselSlide,
   BaseBottomSheet,
+  BaseDropdown,
 } from "@/shared/ui/base";
 import SliderBg from "@/shared/assets/images/slider-bg.png";
 import ChevronLeftIcon from "@/shared/assets/icons/chevron-left.svg";
 import ChevronRightIcon from "@/shared/assets/icons/chevron-right.svg";
 
 const addToCart = () => console.log("add");
+
+const sortBy = ref("popular");
 </script>
 
 <style lang="scss">
@@ -76,6 +83,24 @@ const addToCart = () => console.log("add");
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+
+  &__sort {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    span {
+      font-size: 8px;
+    }
+  }
 
   &__bottom-sheet-filters {
     padding-bottom: 100px;
