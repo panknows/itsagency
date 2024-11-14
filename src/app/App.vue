@@ -32,7 +32,12 @@ div(class="app")
         div(class="app__right")
           div(class="app__controls")
             div(class="app__total-items") 412 товаров
-            button(class="app__filters-bottom-sheet") Фильтры
+            BaseBottomSheet
+              template(#trigger="{ open }")
+                button(class="app__filters-bottom-sheet" @click="open") Фильтры
+              template(#default)
+                div(class="app__bottom-sheet-filters app__filters _mobile")
+                  BaseToggle(v-for="label in ['Новинки', 'Есть в наличии', 'Контрактные', 'Эксклюзивные', 'Распродажа']" :key="label" :label="label" :model-value="false")
             button(class="app__sort") Сначала дорогие
           div(class="app__items")
             div(class="app__item")
@@ -57,6 +62,7 @@ import {
   BaseBreadcrumbs,
   BaseCarousel,
   BaseCarouselSlide,
+  BaseBottomSheet,
 } from "@/shared/ui/base";
 import SliderBg from "@/shared/assets/images/slider-bg.png";
 import ChevronLeftIcon from "@/shared/assets/icons/chevron-left.svg";
@@ -71,10 +77,18 @@ const addToCart = () => console.log("add");
   flex-direction: column;
   min-height: 100vh;
 
+  &__bottom-sheet-filters {
+    padding-bottom: 100px;
+  }
+
   &__filters {
     display: none;
     flex-direction: column;
     gap: 10px;
+
+    &._mobile {
+      display: flex;
+    }
 
     @media (min-width: 1024px) {
       display: flex;
