@@ -4,7 +4,9 @@ div(class="app")
     AppHeader
   div(class="app__hero")
     div(class="app__hero-container container")
-      div(class="app__breadcrumbs") breadcrumbs
+      div(class="app__breadcrumbs")
+        BaseBreadcrumbs(:breadcrumbs="[{ label: 'Главная', url: '/' },{ label: 'Продукты', url: '/' },{ label: 'Краски' }]")
+      h1(class="app__header") Краски
     div(class="app__carousel") carousel
   div(class="app__container container")
     div(class="app__body")
@@ -13,7 +15,10 @@ div(class="app")
           div(class="app__filters")
             BaseToggle(v-for="label in ['Новинки', 'Есть в наличии', 'Контрактные', 'Эксклюзивные', 'Распродажа']" :key="label" :label="label" :model-value="false")
         div(class="app__right")
-          div(class="app__sort") sort
+          div(class="app__controls")
+            div(class="app__total-items") 412 товаров
+            button(class="app__filters-bottom-sheet") Фильтры
+            button(class="app__sort") Сначала дорогие
           div(class="app__items")
             div(class="app__item")
               GoodCard
@@ -32,7 +37,7 @@ import { GoodCard } from "@/entities/good";
 
 import { AddGoodToCardButton } from "@/features/add-good-to-cart";
 
-import { BaseToggle } from "@/shared/ui/base";
+import { BaseToggle, BaseBreadcrumbs } from "@/shared/ui/base";
 
 const addToCart = () => console.log("add");
 </script>
@@ -44,9 +49,13 @@ const addToCart = () => console.log("add");
   min-height: 100vh;
 
   &__filters {
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 10px;
+
+    @media (min-width: 1024px) {
+      display: flex;
+    }
   }
   &__footer {
     background: #000;
@@ -56,6 +65,48 @@ const addToCart = () => console.log("add");
   &__breadcrumbs {
   }
   &__hero {
+    padding-top: 16px;
+
+    @media (min-width: 1024px) {
+      padding-top: 0;
+    }
+
+    &-container {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+  }
+  &__controls {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__total-items {
+    display: none;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+
+    @media (min-width: 1024px) {
+      display: block;
+    }
+  }
+  &__filters-bottom-sheet {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0.06em;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    text-transform: uppercase;
+
+    @media (min-width: 1024px) {
+      display: none;
+    }
   }
   &__content {
     display: flex;
@@ -128,6 +179,15 @@ const addToCart = () => console.log("add");
         border-bottom: 0;
       }
     }
+  }
+
+  &__carousel {
+    display: none;
+  }
+  &__header {
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 31.68px;
   }
 }
 </style>

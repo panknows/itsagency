@@ -115,6 +115,7 @@ const isMenuOpen = ref(false);
     left: 0;
     width: 100%;
     padding-top: 24px;
+    background: #fff;
 
     @media (min-width: 1024px) {
       display: flex;
@@ -151,6 +152,7 @@ const isMenuOpen = ref(false);
     }
 
     &-item {
+      display: flex;
     }
   }
 
@@ -165,6 +167,8 @@ const isMenuOpen = ref(false);
 
   &__call {
     text-decoration: none;
+    display: flex;
+    flex-direction: column;
 
     @media (min-width: 1024px) {
       margin-left: auto;
