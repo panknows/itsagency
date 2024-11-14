@@ -10,7 +10,8 @@ div(class="app")
     div(class="app__body")
       div(class="app__content")
         div(class="app__left")
-          div(class="app__filters") filters
+          div(class="app__filters")
+            BaseToggle(v-for="label in ['Новинки', 'Есть в наличии', 'Контрактные', 'Эксклюзивные', 'Распродажа']" :key="label" :label="label" :model-value="false")
         div(class="app__right")
           div(class="app__sort") sort
           div(class="app__items")
@@ -31,6 +32,8 @@ import { GoodCard } from "@/entities/good";
 
 import { AddGoodToCardButton } from "@/features/add-good-to-cart";
 
+import { BaseToggle } from "@/shared/ui/base";
+
 const addToCart = () => console.log("add");
 </script>
 
@@ -40,6 +43,11 @@ const addToCart = () => console.log("add");
   flex-direction: column;
   min-height: 100vh;
 
+  &__filters {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
   &__footer {
     background: #000;
     height: 100px;
