@@ -6,8 +6,23 @@ div(class="app")
     div(class="app__hero-container container")
       div(class="app__breadcrumbs")
         BaseBreadcrumbs(:breadcrumbs="[{ label: 'Главная', url: '/' },{ label: 'Продукты', url: '/' },{ label: 'Краски' }]")
-      h1(class="app__header") Краски
-    div(class="app__carousel") carousel
+      h1(class="app__title") Краски
+    div(class="app__carousel")
+      BaseCarousel(:breakpoints="{'(min-width: 0px)': {slides: { perView: 1 }}}")
+        template(#arrows="{ next, prev }")
+          div(class="container app__carousel-container")
+            button(class="app__carousel-next-button" @click="prev")
+              img(:src="ChevronLeftIcon")
+            button(class="app__carousel-prev-button" @click="next")
+              img(:src="ChevronRightIcon")
+        BaseCarouselSlide(class="app__carousel-slide")
+          div(class="app__carousel-slide-content", :style="{backgroundImage: `url(${SliderBg})`}")
+            h2(class="app__carousel-slide-head") Краски
+            p(class="app__carousel-slide-desc") Идеально подходят для стен и других поверхностей. <br/> Найди свой идеальный цвет!
+        BaseCarouselSlide(class="app__carousel-slide")
+          div(class="app__carousel-slide-content", :style="{backgroundImage: `url(${SliderBg})`}")
+            h2(class="app__carousel-slide-head") Краски
+            p(class="app__carousel-slide-desc") Идеально подходят для стен и других поверхностей. <br/> Найди свой идеальный цвет!
   div(class="app__container container")
     div(class="app__body")
       div(class="app__content")
@@ -37,7 +52,15 @@ import { GoodCard } from "@/entities/good";
 
 import { AddGoodToCardButton } from "@/features/add-good-to-cart";
 
-import { BaseToggle, BaseBreadcrumbs } from "@/shared/ui/base";
+import {
+  BaseToggle,
+  BaseBreadcrumbs,
+  BaseCarousel,
+  BaseCarouselSlide,
+} from "@/shared/ui/base";
+import SliderBg from "@/shared/assets/images/slider-bg.png";
+import ChevronLeftIcon from "@/shared/assets/icons/chevron-left.svg";
+import ChevronRightIcon from "@/shared/assets/icons/chevron-right.svg";
 
 const addToCart = () => console.log("add");
 </script>
@@ -63,6 +86,12 @@ const addToCart = () => console.log("add");
     margin-top: auto;
   }
   &__breadcrumbs {
+    @media (min-width: 1024px) {
+      position: absolute;
+      top: 32px;
+      left: 10px;
+      z-index: 1;
+    }
   }
   &__hero {
     padding-top: 16px;
@@ -75,6 +104,10 @@ const addToCart = () => console.log("add");
       display: flex;
       flex-direction: column;
       gap: 48px;
+
+      @media (min-width: 1024px) {
+        position: relative;
+      }
     }
   }
   &__controls {
@@ -183,11 +216,87 @@ const addToCart = () => console.log("add");
 
   &__carousel {
     display: none;
+    position: relative;
+
+    @media (min-width: 1024px) {
+      display: block;
+      height: 560px;
+    }
+
+    &-container {
+      position: absolute;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 100%;
+      pointer-events: none;
+    }
+
+    &-next-button,
+    &-prev-button {
+      border: none;
+      background: none;
+      padding: 0;
+      margin: 0;
+      color: #fff;
+      pointer-events: auto;
+      width: 80px;
+      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    &-slide {
+      height: 560px;
+      background: #7bb899;
+      color: #fff;
+      text-align: center;
+
+      &-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        color: #fff;
+        gap: 20px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+      }
+
+      &-head,
+      &-desc {
+        max-width: 472px;
+      }
+      &-head {
+        font-size: 72px;
+        font-weight: 400;
+        letter-spacing: -0.02em;
+        color: inherit;
+      }
+      &-desc {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 21px;
+        color: inherit;
+      }
+    }
   }
-  &__header {
+  &__title {
     font-size: 36px;
     font-weight: 400;
     line-height: 31.68px;
+
+    @media (min-width: 1024px) {
+      display: none;
+    }
   }
 }
 </style>
