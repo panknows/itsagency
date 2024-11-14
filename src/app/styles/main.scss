@@ -6,12 +6,15 @@
 }
 
 .container {
-  max-width: 1792px;
+  max-width: calc(1792px + 48px);
   padding: 0 24px;
-  margin: 0 auto;
-  box-sizing: content-box;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  box-sizing: border-box;
 
   @media (min-width: 1024px) {
     padding: 0 12px;
+    max-width: calc(1792px + 24px);
   }
 }
