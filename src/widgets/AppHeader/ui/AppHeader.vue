@@ -17,8 +17,23 @@ div(class="header", :class="isMenuOpen && '_open'")
           button(v-for="(nav, i) in navs", :key="i", class="header__nav-item")
             img(:src="nav.iconPath")
 
-      a(href="/", class="avatar header__avatar")
-        span 4
+      BaseSlideOver(title="Корзина")
+        template(#trigger="{ open }")
+          a(href="/", class="avatar header__avatar", @click.prevent="open")
+            span 4
+        template(#default)
+          div(class="cart")
+            div(class="cart__header")
+              div(class="cart__count") 4 товара
+              button(class="cart__clear") Очистить список
+            div(class="cart__body")
+              CartGood(title="Краска Wallquest, Brownsone MS90102", price="9600")
+              CartGood(title="Краска Wallquest, Brownsone MS90102", price="9600")
+            div(class="cart__footer")
+              div(class="cart__total")
+                span Итого
+                div(class="cart__total-amount") 14 400₽
+              BaseButton(style="min-width: 240px") Оформить заказ
 </template>
 
 <script setup lang="ts">
@@ -28,6 +43,8 @@ import SearchIcon from "@/shared/assets/icons/search.svg";
 import ProfileIcon from "@/shared/assets/icons/profile.svg";
 import HeartIcon from "@/shared/assets/icons/heart.svg";
 import { ref } from "vue";
+import { BaseSlideOver, BaseButton } from "@/shared/ui/base";
+import { CartGood } from "@/entities/good/ui";
 
 const navs = [
   {
@@ -229,6 +246,62 @@ const isMenuOpen = ref(false);
     font-size: 12px;
     font-weight: 500;
     text-align: center;
+  }
+}
+
+.cart {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  &__count {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+  }
+  &__clear {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 16px;
+    opacity: 0.4;
+    padding: 0;
+    background: none;
+    border: none;
+  }
+  &__body {
+    & > div:not(:last-child) {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+  }
+  &__footer {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__total {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    span {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 16px;
+    }
+
+    &-amount {
+      font-size: 30px;
+      font-weight: 500;
+      line-height: 30px;
+    }
   }
 }
 </style>
